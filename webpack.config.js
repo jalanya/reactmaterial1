@@ -10,11 +10,16 @@ module.exports = {
     loaders: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loader: 'react-hot!babel'
-    }]
+      loader: 'react-hot!babel',
+    },
+    { test: /(\.css)$/, loaders: ['style', 'css'] },
+    { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
+    { test: /\.(woff|woff2)$/, loader: 'url?prefix=font/&limit=5000' },
+    { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream' }
+    ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js']
   },
   output: {
     path: __dirname + '/dist',
@@ -26,6 +31,10 @@ module.exports = {
     hot: true
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.ProvidePlugin({
+         $: "jquery",
+         jQuery: "jquery"
+    })
   ]
 };
